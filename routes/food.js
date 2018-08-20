@@ -7,6 +7,8 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 const pry = require('pryjs')
+router.use(cors());
+
 
 router.get('/', (request, response)=>{
   database('foods').select()
