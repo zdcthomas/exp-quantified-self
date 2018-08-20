@@ -10,7 +10,7 @@ const pry = require('pryjs')
 router.use(cors());
 
 
-router.get('/', (request, response)=>{
+router.get('/', (request, response, next)=>{
   database('foods').select()
     .then((foods)=>{
       response.status(200).json(foods)
@@ -20,7 +20,7 @@ router.get('/', (request, response)=>{
     });
 });
 
-router.get('/:id', (request, response)=>{
+router.get('/:id', (request, response, next)=>{
   let id = request.params.id
   database('foods').select().where({id: id})
   .then((food)=>{
@@ -35,9 +35,8 @@ router.get('/:id', (request, response)=>{
   });
 });
 
-router.post('/', (request, response) =>{
+router.post('/', (request, response, next) =>{
   let food_params = request.body.food
-  console.log(request)
   for (let requiredParameter of ['name', 'calories']) {
     if (!food_params[requiredParameter]) {
       return response
