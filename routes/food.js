@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors')
+express().use(cors())
 
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
