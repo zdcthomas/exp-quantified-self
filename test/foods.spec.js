@@ -101,7 +101,7 @@ describe('API Route end points', () => {
         response.body.should.have.property('id')
         response.body.should.have.property('calories')
         response.body.name.should.equal(name)
-        response.body.name.should.equal(calories)
+        response.body.calories.should.equal(calories)
         done()
       })
     })
