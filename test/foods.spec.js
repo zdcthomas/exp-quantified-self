@@ -22,9 +22,9 @@ before((done) => {
     database.seed.run()
     .then( () => {
       return Promise.all([
-        database('foods').insert({name:"bannana", calories: 150}, 'id'),
-        database('foods').insert({name:"apple", calories: 200}, 'id'),
-        database('foods').insert({name:"pear", calories: 50}, 'id')
+        database('foods').insert({name:"bannana", calories: 150, id:1}, 'id'),
+        database('foods').insert({name:"apple", calories: 200, id:2}, 'id'),
+        database('foods').insert({name:"pear", calories: 50, id:3}, 'id')
       ])
     })
     .then(() => done())
@@ -52,4 +52,32 @@ describe('API Route end points', () => {
       })
     })
   });
+
+  describe('get api/v1/food/:id', ()=>{
+    it('should return the specified food entry', () =>{
+      chai.request(app)
+      .get('/api/v1/foods/1')
+      .end( (err, response) =>{
+        response.should.have.status(200)
+        response.should.be.json
+        response.body[0].should.have.property('name')
+        response.body[0].should.have.property('calories')        
+        response.body[0].should.have.property('id')
+        response.body[0].name.should.equal('bannana')
+        response.body[0].calories.should.equal(150)
+        response.body[0].id.should.equal(1)
+        done();
+      })
+    })
+
+    it('should return a 404 if the item cant be found', ()=>{
+      chai.request(app)
+      .get('/api/v1/foods/40')
+      .end( (err, response) =>{
+        response.should.have.status(404)
+        done();
+      })
+
+    })
+  })
 });
