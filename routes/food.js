@@ -35,6 +35,7 @@ router.get('/:id', (request, response)=>{
 
 router.post('/', (request, response) =>{
   let food_params = request.body.food
+  console.log(request)
   for (let requiredParameter of ['name', 'calories']) {
     if (!food_params[requiredParameter]) {
       return response
@@ -47,7 +48,6 @@ router.post('/', (request, response) =>{
     .then( food_id=>{
       database('foods').where({id: food_id[0]}).select()
       .then( food =>{
-        
         response.status(200).json(food[0])
       })
       .catch(error => {
