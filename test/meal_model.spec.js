@@ -48,11 +48,15 @@ beforeEach((done) => {
 describe('meals', ()=>{
   describe('foods method', ()=>{
     it('should return all associated foods for a meal', (done)=>{
-      let returnedFoods = meal.foods(1)
-      returnedFoods.should.be('array')
-      returnedFoods[0].should.have.property('name','calories')
-      returnedFoods[0].name.should.be('bannana')
-      returnedFoods[0].calories.should.be(150)
+      meal.foods(1)
+      .then( (returnedFoods)=>{
+        returnedFoods.should.be.a('array')
+        returnedFoods[0].should.have.property('name')
+        returnedFoods[0].name.should.equal('bannana')
+        returnedFoods[0].calories.should.equal(150)
+        returnedFoods.length.should.equal(2)
+        done();
+      })
     })
   })
 })
