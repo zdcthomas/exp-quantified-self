@@ -150,4 +150,42 @@ describe('API Route end points', () => {
       
     })
   })
+  describe('patch /api/v1/foods/:id', ()=>{
+    it('should edit the specified food entry', (done)=>{
+      let name = "beegel burts"
+      let calories = 400
+      chai.request(app)
+      .patch('/api/v1/foods/1')
+      .send({
+        food:{
+          name:name,
+          calories:calories
+        }
+      })
+      .end( (err, response)=>{
+        response.should.have.status(200)
+        response.should.be.json
+        response.body.should.have.property('name')
+        response.body.should.have.property('id')
+        response.body.should.have.property('calories')
+        response.body.name.should.equal(name)
+        response.body.calories.should.equal(calories)
+        done()
+      })
+    })
+    it('should return a 400 error code if the information is invalid', (done)=>{
+      let name = "yogurt"
+      chai.request(app)
+      .post('/api/v1/foods/1')
+      .send({
+        food:{
+          name:name
+        }
+      })
+      .end( (err, response)=>{
+        response.should.have.status(400)
+        done()
+      })
+    })
+  })
 });
