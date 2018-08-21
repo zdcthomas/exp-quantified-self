@@ -11,6 +11,7 @@ const database = require('knex')(configuration);
 router.use(cors());
 
 router.get('/', cors(), async(request, response, next)=>{
+  
   let meals = await database('meals').select()
   meals = await Promise.all(meals.map(async(meal)=>{
                 let foods = await Meal.foods(meal.id)
