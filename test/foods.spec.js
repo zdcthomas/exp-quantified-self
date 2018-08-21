@@ -12,27 +12,27 @@ const database = require('knex')(configuration);
 chai.use(chaiHttp);
 
 before((done) => {
-    database.migrate.latest()
-      .then(() => done())
-      .catch(error => {
-        throw error;
-      });
+  database.migrate.latest()
+  .then(() => done())
+  .catch(error => {
+    throw error;
   });
+});
 
-  beforeEach((done) => {
-    database.seed.run()
-    .then( () => {
-      return Promise.all([
-        database('foods').insert({name:"bannana", calories: 150, id:1}, 'id'),
-        database('foods').insert({name:"apple", calories: 200, id:2}, 'id'),
-        database('foods').insert({name:"pear", calories: 50, id:3}, 'id')
-      ])
-    })
-    .then(() => done())
-    .catch(error => {
-      throw error;
-    });
+beforeEach((done) => {
+  database.seed.run()
+  .then( () => {
+    return Promise.all([
+      database('foods').insert({name:"bannana", calories: 150, id: 1}),
+      database('foods').insert({name:"apple", calories: 200, id: 2}),
+      database('foods').insert({name:"pear", calories: 50, id: 3})
+    ])
+  })
+  .then(() => done())
+  .catch(error => {
+    throw error;
   });
+});
 
 describe('API Route end points', () => {
   describe('get api/v1/foods', () => {
