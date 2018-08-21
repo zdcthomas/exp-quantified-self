@@ -26,7 +26,6 @@ describe('API Route end points', () => {
     database.seed.run()
     .then( ()=>{
       return Promise.all([
-        database('meal_foods').del(),
         database('foods').del()
       ])
     })

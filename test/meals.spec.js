@@ -66,13 +66,13 @@ describe('meal requests', ()=>{
       })
     })
   })
+
   describe('post /api/v1/meals/:id/foods/:id', ()=>{
     it('should return the meal object and all associated foods', (done)=>{
       chai.request(app)
       .post('/api/v1/meals/3/foods/4')
       .end( (err, response)=>{
         response.status.should.equal(201)
-        // response.body.should.be.json
         response.body.should.have.property('message')
         response.body.message.should.equal("Successfully added bagel to Lunch")
         done();
@@ -95,4 +95,30 @@ describe('meal requests', ()=>{
       })
     })
   })
+
+  describe('get /api/v1/meals/:id/foods', ()=>{
+    it('should return the meal object and all associated foods', (done)=>{
+      chai.request(app)
+      .get('/api/v1/meals/1/foods')
+      .end( (err, response)=>{
+        response.status.should.equal(200)
+        response.body.should.be.json
+        response.body.should.have.property('name')
+        response.body.should.have.property('foods')
+        response.body.foods.length.should.equal(2)
+        response.body.foods[0].should.have.property('name')
+        response.body.foods[0].should.have.property('calories')
+        done();
+      })
+    })
+    it('should return a 404 if the meal is not found', (done)=>{
+      chai.request(app)
+      .get('/api/v1/meals/2340/foods')
+      .end( (err, response)=>{
+        response.status.should.equal(404)
+        done();
+      })
+    })
+  })
+
 })
