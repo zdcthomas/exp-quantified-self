@@ -67,7 +67,6 @@ describe('API Route end points', () => {
         response.should.have.status(204)
         database('foods').where({id:1}).select()
         .then((foods)=>{
-          debugger
           foods.should.be.empty
         })
         done();
@@ -155,7 +154,7 @@ describe('API Route end points', () => {
       let name = "beegel burts"
       let calories = 400
       chai.request(app)
-      .patch('/api/v1/foods/1')
+      .patch('/api/v1/foods/2')
       .send({
         food:{
           name:name,
@@ -176,7 +175,7 @@ describe('API Route end points', () => {
     it('should return a 400 error code if the information is invalid', (done)=>{
       let name = "yogurt"
       chai.request(app)
-      .post('/api/v1/foods/1')
+      .patch('/api/v1/foods/1')
       .send({
         food:{
           name:name

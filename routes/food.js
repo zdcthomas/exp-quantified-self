@@ -47,6 +47,35 @@ router.delete('/:id', cors(), (request, response, next)=>{
   })
 })
 
+router.patch('/:id', cors(), (request, response, next)=>{
+  let food_params = request.body.food
+  let id = request.params.id
+
+  for (let requiredParameter of ['name', 'calories']) {
+    if (!food_params[requiredParameter]) {
+      return response
+      .status(400)
+      .send({ error: `Expected format: { name: <String>, calories: <String> }. You're missing a "${requiredParameter}" property.` });
+    }
+  }
+
+  database('foods').where({id: id})
+  .update({name:food_params.name, calories:food_params.calories})
+  .returning('id', 'name', 'calories')
+  .then( food_id=>{
+    database('foods').where({id: food_id[0]}).select()
+    .then( food =>{
+      response.status(200).json(food[0])
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+  })
+  .catch(error => {
+    response.status(500).json({ error });
+  })
+})
+
 router.post('/', cors(), (request, response, next) =>{
   let food_params = request.body.food
   for (let requiredParameter of ['name', 'calories']) {
