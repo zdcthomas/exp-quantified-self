@@ -46,4 +46,16 @@ router.post('/:meal_id/foods/:food_id', cors(), async(request, response, next)=>
   
 })
 
+router.get('/:meal_id/foods', cors(), async(request, response, next)=>{
+  let meal_id = request.params.meal_id
+  let meal = await database('meals').where({id:meal_id}).select()
+  if (meal[0]) {
+    let foods = await Meal.foods(meal[0].id)
+    meal[0].foods = foods
+    response.status(200).json(meal[0])
+  } else {
+    response.status(404).json({error:"meal not found"})
+  }
+})
+
 module.exports = router;
