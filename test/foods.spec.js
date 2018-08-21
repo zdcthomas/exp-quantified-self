@@ -65,9 +65,10 @@ describe('API Route end points', () => {
       .delete('/api/v1/foods/1')
       .end( (err, response) => {
         response.should.have.status(204)
-        database('foods').where({id:1})
+        database('foods').where({id:1}).select()
         .then((foods)=>{
-          foods[0].should.not.be.ok()
+          debugger
+          foods.should.be.empty
         })
         done();
       })

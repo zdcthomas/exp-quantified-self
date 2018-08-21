@@ -36,6 +36,17 @@ router.get('/:id', cors(), (request, response, next)=>{
   });
 });
 
+router.delete('/:id', cors(), (request, response, next)=>{
+  let id = request.params.id
+  database('foods').where({id: id}).del()
+  .then(()=>{
+    response.status(204).json({message:"Food deleted"})
+  })
+  .catch((error)=>{
+    response.status(404).json({error})
+  })
+})
+
 router.post('/', cors(), (request, response, next) =>{
   let food_params = request.body.food
   for (let requiredParameter of ['name', 'calories']) {
