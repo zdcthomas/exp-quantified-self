@@ -119,5 +119,33 @@ describe('meal requests', ()=>{
       })
     })
   })
+  describe('delete /api/v1/meals/:id/foods/:id', ()=>{
+    it('should delete the meal food association', (done)=>{
+      chai.request(app)
+      .delete('/api/v1/meals/1/foods/1')
+      .end( (err, response)=>{
+        response.status.should.equal(200)
+        response.body.should.have.property('message')
+        response.body.message.should.have.equal("Successfully removed bannana to Breakfast")
+        done();
+      })
+    })
+    it('should return a 404 if the meal is not found', (done)=>{
+      chai.request(app)
+      .delete('/api/v1/meals/2340/foods/1')
+      .end( (err, response)=>{
+        response.status.should.equal(404)
+        done();
+      })
+    })
+    it('should return a 404 if the food is not found', (done)=>{
+      chai.request(app)
+      .delete('/api/v1/meals/1/foods/40')
+      .end( (err, response)=>{
+        response.status.should.equal(404)
+        done();
+      })
+    })
+  })
 
 })
