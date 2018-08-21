@@ -19,7 +19,7 @@ router.get('/', cors(), async(request, response, next)=>{
                   return meal
                 }))
   
-  if (meals[0].name) {
+  if (meals[0]) {
     response.status(200).json(meals)
   } else {
     response.status(500).json({error:"internal server error"})
