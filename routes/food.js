@@ -31,7 +31,8 @@ router.get('/:id', cors(), (request, response, next)=>{
     }
   })
   .catch((error)=>{
-      
+    response.status(404).json({error})
+
   });
 });
 
