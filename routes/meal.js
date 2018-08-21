@@ -41,9 +41,25 @@ router.post('/:meal_id/foods/:food_id', cors(), async(request, response, next)=>
     })
   } else {
     response.status(404).json({error:"Meal or Food not found"})
-
   }
-  
+})
+
+router.delete('/:meal_id/foods/:food_id', cors(), async(request, response, next) =>{
+  let meal_id = request.params.meal_id
+  let food_id = request.params.food_id
+  let meal = await database('meals').where({id:meal_id}).select()
+  let food = await database('foods').where({id:food_id}).select()
+  if (meal[0] && food[0]) {
+    database('meal_foods').where({meal_id:meal[0].id, food_id:food[0].id}).del()
+    .then( ()=>{
+        response.status(200).json({message:`Successfully removed ${food[0].name} to ${meal[0].name}`})
+    })
+    .catch(error=>{
+      response.status(500).json({error})
+    })
+  } else {
+    response.status(404).json({error:"Meal or Food not found"})
+  }
 })
 
 router.get('/:meal_id/foods', cors(), async(request, response, next)=>{
