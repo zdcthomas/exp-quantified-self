@@ -59,6 +59,30 @@ describe('API Route end points', () => {
     })
   });
 
+  describe('delete api/v1/foods/:id', () => {
+    it('should delete the specified food', (done)=> {
+      chai.request(app)
+      .delete('/api/v1/foods/1')
+      .end( (err, response) => {
+        response.should.have.status(204)
+        database('foods').where({id:1}).select()
+        .then((foods)=>{
+          debugger
+          foods.should.be.empty
+        })
+        done();
+      })
+    })
+    it('should return a 404 if the food cant be found', (done)=> {
+      chai.request(app)
+      .delete('/api/v1/foods/1')
+      .end( (err, response) => {
+        response.should.have.status(204)
+        done();
+      })
+    })
+  })
+
   describe('get api/v1/food/:id', ()=>{
     it('should return the specified food entry', (done) =>{
       chai.request(app)
