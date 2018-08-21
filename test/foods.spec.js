@@ -54,8 +54,6 @@ describe('API Route end points', () => {
         response.body[0].should.have.property('name')
         response.body[0].should.have.property('calories')        
         response.body[0].should.have.property('id')
-        response.body[0].name.should.equal('bannana')
-        response.body[0].calories.should.equal(150)
         done();
       })
     })

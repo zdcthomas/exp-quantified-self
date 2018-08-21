@@ -102,7 +102,6 @@ describe('meal requests', ()=>{
       .get('/api/v1/meals/1/foods')
       .end( (err, response)=>{
         response.status.should.equal(200)
-        response.body.should.be.json
         response.body.should.have.property('name')
         response.body.should.have.property('foods')
         response.body.foods.length.should.equal(2)
