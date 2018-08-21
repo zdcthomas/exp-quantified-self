@@ -54,7 +54,7 @@ describe('meal requests', ()=>{
         response.status.should.equal(200)
         response.body.should.be.a('array')
         response.body.length.should.equal(4)
-        response.body[0].should.have.property('name','id')
+        response.body[0].should.have.property('name')
         response.body[0].name.should.equal('Breakfast')
         response.body[0].id.should.equal(1)
         response.body[0].foods.should.be.a('array')
