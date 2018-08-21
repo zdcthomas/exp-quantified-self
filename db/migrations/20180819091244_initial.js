@@ -18,6 +18,7 @@ exports.up = function(knex, Promise) {
       table.integer('meal_id').references('meals.id')
     })
   ])
+  .catch(error=>{console.log(error)})
   
 };
 
@@ -26,5 +27,6 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable('meal_foods'),
     knex.schema.dropTable('foods'),
     knex.schema.dropTable('meals')
-  ]);
+  ])
+  .catch(error=>{console.log(error)});
 };
