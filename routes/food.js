@@ -82,12 +82,9 @@ router.get('/:id/recipes', cors(), (request, response, next)=>{
   let id = parseInt(request.params.id)
   Food.recipes(id)
   .then((recipes)=>{
-    let thing = recipes
-    debugger
-    response.status(200).json(recipes)
+    response.status(200).json({recipes})
   })
   .catch((error)=>{
-    
     response.status(500).json({error})
   })
 

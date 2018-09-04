@@ -25,13 +25,13 @@ class Food{
     let food = await database('foods')
                     .select()
                     .where({id: food_id})
-    debugger
+    
     let returned = await fetch(`http://api.yummly.com/v1/api/recipes?q=${food[0].name}&_app_id=4738fae6&_app_key=3aa1603ee04a3bc89f372c0d7a3992da`)
-    debugger
+    
     let recipes = await returned.json()
-    debugger
-    return recipes.matches
-    debugger
+    
+    return recipes.matches.map((recipe)=>{return {name:recipe.sourceDisplayName, url:recipe.smallImageUrls[0]}})
+    
    
   }
 }
