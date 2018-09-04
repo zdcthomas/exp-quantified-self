@@ -52,8 +52,9 @@ describe('API Route end points', () => {
   describe('favorite_foods class method', ()=>{
     it('should return the most eaten food(s) (foods which appear in the highest number of meals) with the times eaten, and an array of the foods with name an calories', ()=>{
       fav_foods = Food.favorite_foods();
+      console.log(fav_foods)
       fav_foods.timesEaten.should.equal(2)
-      foods = fav_foods.body.foods
+      foods = fav_foods[0].foods
       foods.length.should.equal(2)
       foods[0].should.have.keys('name', 'calories')
       foods[0].should.be.a('object')
@@ -71,9 +72,9 @@ describe('API Route end points', () => {
       .get('/api/v1/favorite_foods')
       .end((err,response)=>{
         response.should.have.status(200)
-        response.should.be.json;
-        response.body.timesEaten.should.equal(2)
-        foods = response.body.foods
+        response.should.be.a('array');
+        response.body[0].timesEaten.should.equal(2)
+        foods = response.body[0].foods
         foods.should.be.a('array')
         foods.length.should.equal(2)
         foods[0].should.have.keys('name', 'calories')

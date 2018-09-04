@@ -12,4 +12,4 @@ class Food{
   }
 }
 
-module.exports = Meal;
+module.exports = Food;
