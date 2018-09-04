@@ -2,6 +2,7 @@ const chai = require('chai');
 const should = chai.should();
 const chaiHttp = require('chai-http');
 const app = require('../app');
+const Food = require('../models/food')
 
 
 
@@ -47,8 +48,24 @@ describe('API Route end points', () => {
       throw error;
     });
   });
+
+  describe('favorite_foods class method', ()=>{
+    it('should return the most eaten food(s) (foods which appear in the highest number of meals) with the times eaten, and an array of the foods with name an calories', ()=>{
+      fav_foods = Food.favorite_foods();
+      fav_foods.timesEaten.should.equal(2)
+      foods = fav_foods.body.foods
+      foods.length.should.equal(2)
+      foods[0].should.have.keys('name', 'calories')
+      foods[0].should.be.a('object')
+      foods[0].name.should.equal('Banana')
+      foods[0].calories.should.equal(200)
+      foods[1].name.should.equal('Meatloaf')
+      foods[1].calories.should.equal(800)
+      done();
+    })
+  });
   
-  describe('favorite_foods', ()=>{
+  describe('favorite_foods endpoint', ()=>{
     it('should return the most eaten food(s) (foods which appear in the highest number of meals) with the times eaten, and an array of the foods with name an calories', (done)=>{
       chai.request(app)      
       .get('/api/v1/favorite_foods')
