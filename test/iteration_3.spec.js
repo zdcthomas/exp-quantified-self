@@ -44,10 +44,12 @@ describe('yummly api call', ()=>{
       chai.request(app)
       .get('/api/v1/foods/1/recipes')
       .end( (err, response) => {
+        debugger
         response.should.have.status(200)
         response.body.recipes.should.be.a('array')
         response.body.recipes[0].should.be.json
         response.body.recipes[0].should.have.keys('name', 'url')
+        done();
       })
     })
   })

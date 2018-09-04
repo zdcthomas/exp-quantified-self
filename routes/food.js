@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var cors = require('cors')
+const Food = require('../models/food')
+
 express().use(cors())
 
 const environment = process.env.NODE_ENV || 'development';
@@ -74,6 +76,21 @@ router.patch('/:id', cors(), (request, response, next)=>{
   .catch(error => {
     response.status(500).json({ error });
   })
+});
+
+router.get('/:id/recipes', cors(), (request, response, next)=>{
+  let id = parseInt(request.params.id)
+  Food.recipes(id)
+  .then((recipes)=>{
+    let thing = recipes
+    debugger
+    response.status(200).json(recipes)
+  })
+  .catch((error)=>{
+    
+    response.status(500).json({error})
+  })
+
 })
 
 router.post('/', cors(), (request, response, next) =>{
