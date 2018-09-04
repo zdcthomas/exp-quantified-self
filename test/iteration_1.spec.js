@@ -59,6 +59,7 @@ describe('API Route end points', () => {
         foods = response.body.foods
         foods.should.be.a('array')
         foods.length.should.equal(2)
+        foods[0].should.have.keys('name', 'calories')
         foods[0].should.be.a('object')
         foods[0].name.should.equal('Banana')
         foods[0].calories.should.equal(200)
